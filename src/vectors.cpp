@@ -19,8 +19,6 @@
 // resource as you complete the assignments in this class, so you should check
 // it out!
 
-// Includes std::remove_if to remove elements from vectors.
-#include <algorithm>
 // Includes std::cout (printing) for demo purposes.
 #include <iostream>
 // Includes the vector container library header.
@@ -104,84 +102,15 @@ int main() {
     item.PrintPoint();
   }
 
-  //Many STL container functions rely on iterators for operating on generic containers.
-  //It takes a little getting used to:
-  for(std::vector<Point>::iterator it = point_vector.begin(); it != point_vector.end(); it++){
-    it->PrintPoint();
-  }
-
- //auto helps!
- for(auto it = point_vector.begin(); it != point_vector.end(); it++){
-    it->PrintPoint();
-  }
-
-  // Iterators are good for generic operations, let's see some examples
-
-  // Now, we show how to erase elements from a vector. First, we can erase
-  // elements by their position via the erase function. For instance, if we want
-  // to delete int_vector[2], we can call the following function with the
-  // following arguments. The argument passed into this erase function has
-  // the type std::vector<int>::iterator. An iterator for a C++ STL container
-  // is an object that points to an element within the container. For instance,
-  // int_vector.begin() is an iterator object that points to the first element
-  // in the vector. The vector iterator also has a plus operator that takes
-  // a vector iterator and an integer. The plus operator will increase the 
-  // index of the element that the iterator is pointing to by the number passed
-  // in. Therefore, int_vector.begin() + 2 is pointing to the third element in
-  // the vector, or the element at int_vector[2].
-  // If you are confused about iterators, it may be helpful to read the header of
-  // iterator.cpp.
-  int_vector.erase(int_vector.begin() + 2);
-  std::cout << "Printing the elements of int_vector after erasing "
-               "int_vector[2] (which is 2)\n";
+  // int_vector was built from an initializer list above; let's print it using
+  // our helper function.
+  std::cout << "Printing the elements of int_vector:\n";
   print_int_vector(int_vector);
 
-  // We can also erase elements in a range via the erase function. If we want to
-  // delete elements starting from index 1 to the end of the array, then we can
-  // do so the following. Note that int_vector.end() is an iterator pointing to
-  // the end of the vector. It does not point to the last valid index of the
-  // vector. It points to the end of a vector and cannot be accessed for data.
-  int_vector.erase(int_vector.begin() + 1, int_vector.end());
-  std::cout << "Printing the elements of int_vector after erasing all elements "
-               "from index 1 through the end\n";
-  print_int_vector(int_vector);
-
-  // We can also erase values via filtering, i.e. erasing values if they meet a
-  // conditional. We can do so by importing another library, the algorithm
-  // library, which gives us the std::remove_if function, which removes all
-  // elements meeting a conditional from an iterator range. This does seem
-  // awfully complicated, but the code can be summarized as follows.
-  // std::remove_if takes in 3 arguments. Two of those arguments indicate the
-  // range of elements that we should filter. These are given by
-  // point_vector.begin() and point_vector.end(), which are iterators that point
-  // to the beginning and the end of a vector respectively. Therefore, when we
-  // pass these in, we are implying that we want the whole vector filtered.
-  // The third argument is a conditional lambda type (see the std::function
-  // library in C++, or at 
-  // https://en.cppreference.com/w/cpp/utility/functional/function), that takes
-  // in one argument, which is supposed to represent each element in the vector
-  // that we are filtering. This function should return a boolean that is true
-  // if the element is to be filtered out and false otherwise. std::remove_if
-  // returns an iterator pointing to the first element in the container that
-  // should be eliminated. Keep in mind that it swaps elements as needed,
-  // partitioning the elements that need to be deleted after the iterator value
-  // it returns. When erase is called, it deletes only the elements that
-  // remove_if has partitioned away to be deleted, up to the end of the vector.
-  // This outer erase takes a range argument, as we saw in the previous example.
-  point_vector.erase(
-      std::remove_if(point_vector.begin(), point_vector.end(),
-                     [](const Point &point) { return point.GetX() == 37; }),
-      point_vector.end());
-
-  // After calling remove here, we should see that three elements remain in our
-  // point vector. Only the one with value (37, 445) is deleted.
-  std::cout << "Printing the point_vector after (37, 445) is erased:\n";
-  for (const Point &item : point_vector) {
-    item.PrintPoint();
-  }
-
-  // We discuss more stylistic and readable ways of iterating through C++ STL
-  // containers in auto.cpp! Check it out if you are interested.
+  // This file only covers the basics of std::vector. For iterators, erasing
+  // elements, and a tour of the other STL containers (list, map, set, queue,
+  // stack, and more), see stl_concepts.cpp. We also discuss more stylistic and
+  // readable ways of iterating through STL containers in auto.cpp!
 
   return 0;
 }

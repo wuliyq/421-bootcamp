@@ -39,6 +39,7 @@ add_executable(templated_classes src/templated_classes.cpp)
 
 # Compiling C++ STL executables
 add_executable(vectors src/vectors.cpp)
+add_executable(stl_concepts src/stl_concepts.cpp)
 add_executable(sets src/sets.cpp)
 add_executable(unordered_maps src/unordered_maps.cpp)
 add_executable(unique_ptr src/unique_ptr.cpp)
