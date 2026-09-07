@@ -114,6 +114,7 @@ reading the files on concepts you are unfamiliar about.
 - `mutex.cpp`: Covers `std::mutex`.
 - `scoped_lock.cpp`: Covers `std::scoped_lock`.
 - `condition_variable.cpp`: Covers `std::condition_variable`.
+- `promise.cpp`: Covers `std::promise` and `std::future`.
 - `rwlock.cpp`: Covers the usage of several C++ STL synchronization primitive libraries (`std::shared_mutex`, `std::shared_lock`, `std::unique_lock`) to create a reader-writer's lock implementation. 
 
 
@@ -147,6 +148,7 @@ tries to be as comprehensive as possible, it still only covers the bare bones of
 - [std::mutex](https://en.cppreference.com/w/cpp/thread/mutex)
 - [std::scoped_lock](https://en.cppreference.com/w/cpp/thread/scoped_lock)
 - [std::condition_variable](https://en.cppreference.com/w/cpp/thread/condition_variable)
+- [std::promise](https://en.cppreference.com/w/cpp/thread/promise) and [std::future](https://en.cppreference.com/w/cpp/thread/future)
 - [std::shared_mutex](https://en.cppreference.com/w/cpp/thread/shared_mutex)
 - [std::shared_lock](https://en.cppreference.com/w/cpp/thread/shared_lock)
 - [std::unique_lock](https://en.cppreference.com/w/cpp/thread/unique_lock)
