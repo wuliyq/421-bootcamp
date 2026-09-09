@@ -60,6 +60,8 @@ int main() {
   //This is ok!  Allocation is stack, duration is "automatic"
   for (int i = 0; i < 3; i++) {
     Point pointStack(2,2);
+    // tied to stack of the for loop
+    // constructor and desctructor will be called 3 times
   }
 
   //in java, this is ok
@@ -106,6 +108,10 @@ int main() {
   // However, it's possible to transfer ownership of unique pointers via
   // std::move.
   std::unique_ptr<Point> u4 = std::move(u3);
+  // u4 is on the stack, pointing to a reference on the heap
+  // after u4 is out of scope, the destructor of u4 will be called, which will delete the Point instance on the heap
+  // u3 is now empty, and u4 is the sole owner of the Point instance that was
+  // previously managed by u3.
 
   // Note that because u3 is an lvalue, it no longer contains any managed
   // object. It is an empty unique pointer. Let's retest for emptyness.

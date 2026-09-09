@@ -4,11 +4,16 @@
  * @brief Tutorial code for usage of a shared pointer.
  */
 
+ // reference count is incremented when copy is called and decremented when destructor is called
+
 // In this file, we'll talk about std::shared_ptr, which is a C++ smart pointer.
 // See the intro of unique_ptr.cpp for an introduction on smart pointers.
 // std::shared_ptr is a type of smart pointer that retains shared ownership of
 // an object through a pointer. This means that multiple shared pointers can
-// own the same object, and shared pointers can be copied.
+// own the same object, and shared pointers can be copied. (different from std::unique_ptr, which retains sole ownership of an object and cannot be copied). 
+// The object is destroyed and its memory deallocated when either of the following happens:
+// 1. the last remaining shared pointer owning the object is destroyed
+// 2. the last remaining shared pointer owning the object is assigned another pointer via operator=
 
 // Includes std::cout (printing) for demo purposes.
 #include <iostream>

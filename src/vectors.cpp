@@ -72,9 +72,9 @@ int main() {
   // moves it to the memory in the vector. We can see this here where we add two
   // Point objects to our vector.
   std::cout << "Appending to the point_vector via push_back:\n";
-  point_vector.push_back(Point(35, 36));
+  point_vector.push_back(Point(35, 36)); // make copies of the Point object
   std::cout << "Appending to the point_vector via emplace_back:\n";
-  point_vector.emplace_back(37, 38);
+  point_vector.emplace_back(37, 38); // construct the Point object in place in the vector
 
   // Let's just add more items to the back of our point_vector.
   point_vector.emplace_back(39, 40);
@@ -85,14 +85,14 @@ int main() {
   // good practice to use an unsigned int type for array or vector indexes.
   std::cout << "Printing the items in point_vector:\n";
   for (size_t i = 0; i < point_vector.size(); ++i) {
-    point_vector[i].PrintPoint();
+    point_vector[i].PrintPoint(); // reference to the Point object at index i in the vector
   }
 
   // We can also iterate through it via a for-each loop. Note that I use
   // references to iterate through it so that the items we iterate through are
   // the items in the original vector. If we iterate through references of the
   // vector elements, we can also modify the data in the vector.
-  for (Point &item : point_vector) {
+  for (Point &item : point_vector) { // reference to the Point object in the vector with '&'; if without '&', item is a copy of the Point object in the vector
     item.SetY(445);
   }
 

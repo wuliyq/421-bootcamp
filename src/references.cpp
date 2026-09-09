@@ -14,10 +14,12 @@
 #include <iostream>
 
 // A function that takes an int and adds 1000 to it.
+// pass a copy
 void add_thousand(int a){ a = a + 1000; }
 
 
 // A function that takes an int reference and adds 3 to it.
+// pass by reference
 void add_three(int &a) { a = a + 3; }
 
 int main() {
@@ -27,8 +29,10 @@ int main() {
   // the single ampersand syntax.
   int a = 10;
   int &b = a;
+  // b is a reference to a, so if we change b, then a will also change. For example,
+  b = 20;
 
-  // As stated, if we try to print b, we will get 10.
+  // As stated, if we try to print b, we will get 20.
   std::cout << "b is " << b << std::endl;
 
   // try to add 1000 to a

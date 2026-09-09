@@ -1,0 +1,5 @@
+SELECT p.name AS NAME, IFNULL(p.died, 2022) - p.born AS AGE
+FROM people p
+WHERE p.born >= 1900
+ORDER BY AGE DESC, NAME ASC
+LIMIT 20;

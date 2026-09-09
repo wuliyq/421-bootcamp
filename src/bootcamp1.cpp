@@ -10,6 +10,16 @@ double testFunction(std::string s){
 int main() {
     // TODO: This is your scratchpad for trying out examples during the bootcamp.
     // For starters, print something using std::cout
+<<<<<<< Updated upstream
+=======
+    int i = 5;
+    std::cout << "Hello COMP 421!" << std::endl;
+    // double i[] = {5.0, 6.0};
+    // for(int k=0; k<2; k++){
+    //     std::cout << i[k] << std::endl;
+    // }
+
+>>>>>>> Stashed changes
 
 
     // Activity for later

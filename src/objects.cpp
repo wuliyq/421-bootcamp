@@ -24,6 +24,10 @@
 class Base {
 public:
   //ctor?
+
+  // Constructor is auto-generated if omitted
+  // Same for destructor which will help clean up members when the object goes out of scope and is ready to be deleted
+
   //if omitted, a default (no args) ctor is generated that
   //default constructs base classes and then each member in order
   
@@ -65,6 +69,7 @@ public:
     //not copyable!
     //comment out for auto-generated copy ctor
     Derived(Derived &o) = delete;
+    // will throw a copililation error if you try to copy a Derived object (by calling copy constructor)
 
     //This is not java!
     //This print decl is *hiding* Base::print.  Not great!
@@ -83,12 +88,16 @@ public:
 
   //once we have explicit ctor, all automatic ctors vanish
   Base2(std::string s) : name_(s) {}
+
+  // copy constructor, takes a reference to another Base2 object and copies its name_ member
   Base2(Base2 &o) : name_(o.name_) {}
+  // eg. Base2(Base2 &o) : name_("this is a copy of another Base2 object") {}
 
   //someone might override, better make it virtual so the compiler knows we don't want hiding for this name
   virtual void print() const {
     std::cout << "(" << name_ << ")\n";
   }
+  // virtual means "this function can be overridden in a derived class"
 
   void setName(std::string s){
     name_ = s;
@@ -159,7 +168,7 @@ int main() {
     //upcast!
     Base b2 = d;
     std::cout << "Derived Rafa (sliced):" << std::endl;
-    b2.print();
+    b2.print(); // print() of Base class is called, not Derived class print()
     std::cout << std::endl;
     //(Rafa)
     //Oh no!  This is not polymorphism in C++, its object slicing!
@@ -167,9 +176,9 @@ int main() {
    
     //If we use a reference (or ptr) to Base,
     //the object isn't sliced, it retains info about the derived class
-    Base& b3(d);
+    Base& b3(d); // a pointer to a Base object which has name b3 and points to a Derived object d
     std::cout << "Derived Rafa (hidden):" << std::endl;
-    b3.print();
+    b3.print(); // still calls Base::print() because print() is hidden, not overridden
     std::cout << std::endl;
     //(Rafa)
     //Disaster!  This is not polymorphism in C++, because print is hidden, not overridden
