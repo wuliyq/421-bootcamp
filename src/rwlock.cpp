@@ -33,7 +33,7 @@
 // exclusive locking.
 int count = 0;
 std::shared_mutex m;
-
+std::shared_mutex m2;
 // This function uses a std::shared_lock (reader lock equivalent) to gain
 // read only, shared access to the count variable, and reads the count
 // variable.
@@ -68,6 +68,35 @@ int main() {
   t4.join();
   t5.join();
   t6.join();
+
+
+  // fun with locks
+  std::thread m_first([]{
+    for(int i=0; i<10000; i++){
+      m.lock(); 
+      m2.lock();
+      std::cout << "m first acquired both" << std::endl; 
+      m.unlock();
+      m2.unlock();
+    }
+    std::cout << "m first done" << std::endl; 
+  });
+
+
+  std::thread m_second([]{
+    for(int i=0; i<10000; i++){
+      m2.lock(); 
+      m.lock();
+      std::cout << "m second acquired both" << std::endl; 
+      m.unlock();
+      m2.unlock();
+    }
+    std::cout << "m second done" << std::endl; 
+  });
+
+  m_first.join();
+  m_second.join();
+  std::cout << "soak test complete" << std::endl;
 
   return 0;
 }

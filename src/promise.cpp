@@ -81,8 +81,10 @@ int main() {
   // promise into the thread, since a promise cannot be copied.
   std::thread producer(wait_for_file, std::move(result_promise));
 
-  std::cout << "Main: blocked in get() until the producer sets a value..."
+  while(result_future.wait_for(std::chrono::milliseconds(500)) != std::future_status::ready){
+    std::cout << "Main: blocked in get() until the producer sets a value..."
             << std::endl;
+  }
 
   // get() blocks until the producer thread calls set_value on the promise.
   // Since the producer waits for an external file, this call will not return

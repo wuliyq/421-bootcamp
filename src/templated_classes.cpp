@@ -7,6 +7,7 @@
 // Includes std::cout (printing).
 #include <iostream>
 
+
 // Templates can be also used to implement classes. For instance, here is a
 // basic templated class that stores one element of a templated type and
 // prints it when the print function is called.
@@ -78,6 +79,35 @@ class Bar {
     }
 };
 
+//helper classes, note the lack of inheritance
+class Helper{
+  public:
+    void Baz() { std::cout << "Implemented!" << std::endl; }
+
+};
+
+class Helper2{
+  public:
+    void Baz() { std::cout << "Help 2!" << std::endl; }
+
+};
+
+// Templated (non-inheritance-based) polymorphism.
+// When types are known at compile time, this can be faster
+// due to compiler optimization/inlining
+template<typename T>
+class Delegation{
+  public:
+    Delegation(){
+      helper_.Baz();
+      // Reference to undefined.  The drawback is, we lose some code readability.
+      //helper_.Bah();
+    }
+
+  private:
+    T helper_;
+};
+
 int main() {
   // First, let us construct an object from a templated class. The Foo
   // class template is instantiated with an int template argument. This
@@ -120,7 +150,16 @@ int main() {
   std::cout << "Calling print_int on Bar<150> f: ";
   f.print_int();
 
-  // Once again, these are contrived examples, but it is still important
+  // Templates provide an alternative way to do inheritance-like things.
+  // Resolving everything at compile time allows more compiler optimization,
+  // which is why you will see templates everywhere in production.
+
+  // first behavior
+  Delegation<Helper> delegator;
+  // second behavior
+  Delegation<Helper2> delegator2;
+
+  // These are simple examples, but it is still important
   // to understand them you'll be seeing code similar to this in the Bustub
   // codebase, so it's good to understand templated classes in these contexts!
 

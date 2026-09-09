@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 double testFunction(std::string s){
-
+    return 10.0;
 }
 
 int main() {

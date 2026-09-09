@@ -27,10 +27,8 @@
 #include <iostream>
 // Includes the utility header for std::move.
 #include <utility>
-// Includes the header for std::vector. We'll cover vectors more in
-// containers.cpp, but what suffices to know for now is that vectors are
-// essentially dynamic arrays, and the type std::vector<int> is an array of
-// ints. Mainly, vectors take up a non-negligible amount of memory, and are here
+// Includes the header for std::vector.
+// Vectors can take up a non-negligible amount of memory, and are here
 // to show the performance benefits of using std::move.
 #include <vector>
 
@@ -68,18 +66,30 @@ int main() {
   // We define a vector of integers here.
   std::vector<int> int_array = {1, 2, 3, 4};
 
+  // copy ctor, O(n)
+  std::vector<int> int_array_cpy(int_array);
+
   // Now, we move the values of this array to another lvalue.
+
+  // move ctor, O(1)
   std::vector<int> stealing_ints = std::move(int_array);
 
   // Rvalue references are references that refer to the data itself, as opposed
   // to a lvalue. Calling std::move on a lvalue (such as stealing_ints) will
   // result in the expression being cast to a rvalue reference.
-  std::vector<int> &&rvalue_stealing_ints = std::move(stealing_ints);
 
-  // However, note that after this, it is still possible to access the data in
-  // stealing_ints, since that is the lvalue that owns the data, not
-  // rvalue_stealing_ints.
-  std::cout << "Printing from stealing_ints: " << stealing_ints[1] << std::endl;
+  // This leaves int_array "valid, but unspecified" meaning
+  // - Safe to call dtor
+  // - Safe to assign to
+  // - Don't access any data
+  
+  // Don't do this:
+  //std::cout << "Ahhh " << int_array[0] << std::endl;
+
+  // Do this:
+  int_array = {5,4,3};
+  std::cout << "OK: " << int_array[0] << std::endl;
+
 
   // It is possible to pass in a rvalue reference into a function. However,
   // once the rvalue is moved from the lvalue in the caller context to a lvalue
@@ -89,6 +99,10 @@ int main() {
   std::vector<int> int_array2 = {1, 2, 3, 4};
   std::cout << "Calling move_add_three_and_print...\n";
   move_add_three_and_print(std::move(int_array2));
+
+  // While it may sometimes be possible to use an object, obj, after std::move(obj)
+  // and before it is moved, this is dangerous.  Don't do it in this class.  Assume that after
+  // f(std::move(obj)) is called, obj is unusable.
 
   // It would be unwise to try to do anything with int_array2 here. Uncomment
   // the code to try it out! (On my machine, this segfaults...) NOTE: THIS MIGHT
